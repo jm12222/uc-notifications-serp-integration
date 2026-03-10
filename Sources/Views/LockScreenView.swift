@@ -92,25 +92,25 @@ struct LockScreenView: View {
                 Image("favicon")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 38, height: 38)
+                    .frame(width: 36, height: 36)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
 
-                VStack(alignment: .leading, spacing: 2) {
-                    HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 1) {
+                    HStack(alignment: .firstTextBaseline) {
                         Text("Trending now")
-                            .headline4EmphasizedTypography()
+                            .body4LinkTypography()
                             .foregroundStyle(.black)
 
                         Spacer()
 
                         Text("now")
-                            .meta3Typography()
+                            .meta4Typography()
                             .foregroundStyle(.black.opacity(0.4))
                     }
 
                     Text("Everyone's talking: Selena Gomez wedding details")
-                        .headline4Typography()
-                        .foregroundStyle(.black.opacity(0.7))
+                        .body4Typography()
+                        .foregroundStyle(.black.opacity(0.6))
                         .lineLimit(2)
                         .multilineTextAlignment(.leading)
                 }
@@ -118,11 +118,11 @@ struct LockScreenView: View {
                 Image("profile1")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 30, height: 30)
+                    .frame(width: 28, height: 28)
                     .clipShape(Circle())
             }
             .padding(.horizontal, 12)
-            .padding(.vertical, 12)
+            .padding(.vertical, 10)
             .background(Color.white.opacity(0.85))
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .responsiveUIShadow(cornerRadius: 16)
