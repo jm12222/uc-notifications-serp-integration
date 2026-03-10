@@ -12,37 +12,37 @@ struct LockScreenView: View {
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        ZStack {
-            wallpaper
+        GeometryReader { geo in
+            ZStack {
+                wallpaper
 
-            VStack(spacing: 0) {
-                Spacer()
-                    .frame(height: 78)
+                VStack(spacing: 0) {
+                    Spacer()
+                        .frame(height: geo.safeAreaInsets.top + 56)
 
-                dateDisplay
+                    dateDisplay
 
-                Spacer()
-                    .frame(height: 0)
+                    timeDisplay
 
-                timeDisplay
+                    Spacer()
+                        .frame(height: 16)
 
-                Spacer()
-                    .frame(height: 16)
+                    if notificationAppeared {
+                        notificationBanner
+                            .transition(.asymmetric(
+                                insertion: .move(edge: .top).combined(with: .opacity).animation(.enterIn(MotionDuration.mediumIn)),
+                                removal: .opacity.animation(.fadeOut(MotionDuration.extraShortOut))
+                            ))
+                    }
 
-                if notificationAppeared {
-                    notificationBanner
-                        .transition(.asymmetric(
-                            insertion: .move(edge: .top).combined(with: .opacity).animation(.enterIn(MotionDuration.mediumIn)),
-                            removal: .opacity.animation(.fadeOut(MotionDuration.extraShortOut))
-                        ))
+                    Spacer()
+
+                    bottomControls
+                        .padding(.bottom, geo.safeAreaInsets.bottom + 8)
                 }
-
-                Spacer()
-
-                bottomControls
             }
+            .ignoresSafeArea()
         }
-        .ignoresSafeArea()
         .onReceive(timer) { _ in
             updateTime()
         }
@@ -59,23 +59,10 @@ struct LockScreenView: View {
     // MARK: - Wallpaper
 
     private var wallpaper: some View {
-        ZStack {
-            Image("ocean")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-            LinearGradient(
-                stops: [
-                    .init(color: Color.black.opacity(0.4), location: 0.0),
-                    .init(color: Color.black.opacity(0.1), location: 0.3),
-                    .init(color: Color.black.opacity(0.1), location: 0.7),
-                    .init(color: Color.black.opacity(0.5), location: 1.0)
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-        }
+        Image("lockscreen-wallpaper")
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .ignoresSafeArea()
     }
 
     // MARK: - Date Display
@@ -136,8 +123,7 @@ struct LockScreenView: View {
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 12)
-            .background(.ultraThinMaterial.opacity(0.9))
-            .background(Color.white.opacity(0.7))
+            .background(Color.white.opacity(0.85))
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .responsiveUIShadow(cornerRadius: 16)
         }
@@ -180,7 +166,6 @@ struct LockScreenView: View {
             }
         }
         .padding(.horizontal, 48)
-        .padding(.bottom, 36)
     }
 
     // MARK: - Helpers
