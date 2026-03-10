@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "app-uc_notifications_serp_integration_1336793998478221-account-center-outline.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "template-rendering-intent" : "template"
+  }
+}
