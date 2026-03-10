@@ -17,12 +17,17 @@ struct LockScreenView: View {
 
             VStack(spacing: 0) {
                 Spacer()
-                    .frame(height: 72)
+                    .frame(height: 78)
+
+                dateDisplay
+
+                Spacer()
+                    .frame(height: 0)
 
                 timeDisplay
 
                 Spacer()
-                    .frame(height: 32)
+                    .frame(height: 16)
 
                 if notificationAppeared {
                     notificationBanner
@@ -73,28 +78,30 @@ struct LockScreenView: View {
         }
     }
 
+    // MARK: - Date Display
+
+    private var dateDisplay: some View {
+        Text(currentDate)
+            .headline3Typography()
+            .foregroundStyle(.white.opacity(0.9))
+            .textOnMediaShadow()
+    }
+
     // MARK: - Time Display
 
     private var timeDisplay: some View {
-        VStack(spacing: 0) {
-            Text(currentTime)
-                .font(.system(size: 82, weight: .bold, design: .rounded))
-                .foregroundStyle(.white)
-                .textOnMediaShadow()
-                .contentTransition(.numericText())
-
-            Text(currentDate)
-                .headline2EmphasizedTypography()
-                .foregroundStyle(.white.opacity(0.9))
-                .textOnMediaShadow()
-        }
+        Text(currentTime)
+            .font(.system(size: 82, weight: .bold, design: .rounded))
+            .foregroundStyle(.white)
+            .textOnMediaShadow()
+            .contentTransition(.numericText())
     }
 
     // MARK: - Notification Banner
 
     private var notificationBanner: some View {
         Button(action: onNotificationTap) {
-            HStack(alignment: .top, spacing: 12) {
+            HStack(alignment: .center, spacing: 10) {
                 Image("favicon")
                     .resizable()
                     .scaledToFit()
@@ -102,32 +109,40 @@ struct LockScreenView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
 
                 VStack(alignment: .leading, spacing: 2) {
-                    HStack {
-                        Text("Facebook")
+                    HStack(alignment: .top) {
+                        Text("Trending now")
                             .headline4EmphasizedTypography()
-                            .foregroundStyle(.white)
+                            .foregroundStyle(.black)
 
                         Spacer()
 
                         Text("now")
                             .meta3Typography()
-                            .foregroundStyle(.white.opacity(0.6))
+                            .foregroundStyle(.black.opacity(0.4))
                     }
 
-                    Text("Sarah Chen posted: Amazing cinnamon roll recipe that you might like")
+                    Text("Everyone's talking: Selena Gomez wedding details")
                         .headline4Typography()
-                        .foregroundStyle(.white.opacity(0.9))
+                        .foregroundStyle(.black.opacity(0.7))
                         .lineLimit(2)
                         .multilineTextAlignment(.leading)
                 }
+
+                Image("profile1")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 30, height: 30)
+                    .clipShape(Circle())
             }
-            .padding(14)
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .responsiveUIShadow(cornerRadius: 20)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 12)
+            .background(.ultraThinMaterial.opacity(0.9))
+            .background(Color.white.opacity(0.7))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .responsiveUIShadow(cornerRadius: 16)
         }
-        .buttonStyle(FDSPressedState(cornerRadius: 20, scale: .small))
-        .padding(.horizontal, 12)
+        .buttonStyle(FDSPressedState(cornerRadius: 16, scale: .small))
+        .padding(.horizontal, 16)
     }
 
     // MARK: - Bottom Controls
